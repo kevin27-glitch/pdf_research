@@ -49,8 +49,9 @@ fetch("https://raw.githubusercontent.com/kevin27-glitch/pdf_research/refs/heads/
 // 2. 搜索功能
 document.getElementById("searchInput").addEventListener("input", function(e) {
   const keyword = e.target.value.toLowerCase().trim();
-  const results = document.getElementById("results');
+  const results = document.getElementById("results");
 
+                                          
   if (!keyword) return;
 
   linkData.forEach(item => {
