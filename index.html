@@ -61,7 +61,7 @@ document.getElementById("searchInput").addEventListener("input", function(e) {
     if (key.includes(keyword) || name.includes(keyword)) {
       results.innerHTML += `
         <div class="result">
-          <a href="${item.url}" target="_blank">${item.key} - ${item.name}</a>
+          <a href="${item.url}" target="_blank">${item.key}</a>
         </div>
       `;
     }
