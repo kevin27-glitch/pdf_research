@@ -38,20 +38,18 @@
 
 <script>
 // Put your link here（Subject+Topic+Link）
-let linkData = [];
 
 // 1. 从 links.json 读取数据
 fetch("links.json")
   .then(res => res.json())
   .then(data => {
-    linkData = data;
+    window.linkData = data;
   });
 
 // 2. 搜索功能
 document.getElementById("searchInput").addEventListener("input", function(e) {
   const keyword = e.target.value.toLowerCase().trim();
   const results = document.getElementById("results');
-  results.innerHTML = "";
 
   if (!keyword) return;
 
