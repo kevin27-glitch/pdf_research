@@ -44,12 +44,13 @@ fetch("https://raw.githubusercontent.com/kevin27-glitch/pdf_research/refs/heads/
   .then(res => res.json())
   .then(data => {
     window.linkData = data;
+    document.getElementById("searchInput").addEventListener("input", function(e) {
+  const keyword = e.target.value.toLowerCase().trim();
+  const results = document.getElementById("results");
   });
 
 // 2. 搜索功能
-document.getElementById("searchInput").addEventListener("input", function(e) {
-  const keyword = e.target.value.toLowerCase().trim();
-  const results = document.getElementById("results");
+
 
                                           
   if (!keyword) return;
