@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>IB_PDF Searching Engine</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 800px; margin: 20px auto; padding: 0 15px; }
+  input { width: 100%; padding: 10px; font-size: 18px; margin-bottom: 20px; box-sizing: border-box; }
+  .result { padding: 12px; border-bottom: 1px solid #eee; }
+  .result a { font-size: 16px; color: #007bff; text-decoration: none; }
+  .result a:hover { text-decoration: underline; }
+  .add-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #007bff;
+    color: white;
+    font-size: 30px;
+    text-align: center;
+    line-height: 60px;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  }
+</style>
+</head>
+<body>
+
+<h1>PDF Search</h1>
+<input type="text" id="searchInput" placeholder="Search Physics B1、B2、C1...">
+
+<div id="results"></div>
+
+<!-- Upload -->
+<div class="add-btn" onclick="addNewLink()">+</div>
+
+<script>
+// Put your link here（Subject+Topic+Link）
+let linkData = [];
+
+// 1. 从 links.json 读取数据
+fetch("links.json")
+  .then(res => res.json())
+  .then(data => {
+    linkData = data;
+  });
+
+// 2. 搜索功能
+document.getElementById("searchInput").addEventListener("input", function(e) {
+  const keyword = e.target.value.toLowerCase().trim();
+  const results = document.getElementById("results');
+  results.innerHTML = "";
+
+  if (!keyword) return;
+
+  linkData.forEach(item => {
+    const key = item.key.toLowerCase();
+    const name = item.name.toLowerCase();
+
+    if (key.includes(keyword) || name.includes(keyword)) {
+      results.innerHTML += `
+        <div class="result">
+          <a href="${item.url}" target="_blank">${item.key} - ${item.name}</a>
+        </div>
+      `;
+    }
+  });
+});
+
+// 3. 添加新链接（跳转到 GitHub Gist 编辑页）
+function addNewLink() {
+  const gistUrl = "https://gist.github.com/你的用户名/你的Gist ID";
+  window.open(gistUrl, "_blank");
+}
+</script>
+
+</body>
+</html>
