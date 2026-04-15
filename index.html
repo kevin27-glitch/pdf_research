@@ -57,7 +57,7 @@ fetch("https://raw.githubusercontent.com/kevin27-glitch/pdf_research/refs/heads/
     const key = item.key.toLowerCase();
     const name = item.name.toLowerCase();
 
-    if (key.includes(keyword) || name.includes(keyword)) {
+    if (item.key.toLowerCase().startsWith(keyword.toLowerCase())) {
       results.innerHTML += `
         <div class="result">
           <a href="${item.url}" target="_blank">${item.key}</a>
