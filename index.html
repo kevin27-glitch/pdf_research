@@ -4,7 +4,15 @@
 <meta charset="UTF-8">
 <title>KK-Stuengine | IB PDF Search</title>
 <style>
-  body { font-family: Arial, sans-serif; max-width: 800px; margin: 20px auto; padding: 0 15px; }
+  body { 
+    font-family: Arial, sans-serif; 
+    max-width: 800px; 
+    margin: 20px auto; 
+    padding: 0 15px; 
+    display: flex;
+    flex-direction: column;
+    min-height: 90vh;
+  }
 
   .header {
     display: flex;
@@ -27,53 +35,59 @@
     margin: 0;
   }
 
-  input { width: 100%; padding: 10px; font-size: 18px; margin-bottom: 20px; box-sizing: border-box; }
-  .result { padding: 12px; border-bottom: 1px solid #eee; }
-  .result a { font-size: 16px; color: #007bff; text-decoration: none; }
-  .result a:hover { text-decoration: underline; }
+  input { 
+    width: 100%; 
+    padding: 10px; 
+    font-size: 18px; 
+    margin-bottom: 20px; 
+    box-sizing: border-box; 
+  }
+  .result { 
+    padding: 12px; 
+    border-bottom: 1px solid #eee; 
+  }
+  .result a { 
+    font-size: 16px; 
+    color: #007bff; 
+    text-decoration: none; 
+  }
+  .result a:hover { 
+    text-decoration: underline; 
+  }
 
-  .add-btn {
+  .main-content {
+    flex: 1;
+  }
+
+  /* Contact Us 按钮 */
+  .contact-btn {
     position: fixed;
-    bottom: 25px;
+    bottom: 100px;
     right: 25px;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background: #007bff;
+    background: #25D366;
     color: white;
-    font-size: 30px;
-    text-align: center;
-    line-height: 60px;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: bold;
     cursor: pointer;
     box-shadow: 0 3px 10px rgba(0,0,0,0.2);
   }
 
-  .upload-modal {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5);
-    justify-content: center;
-    align-items: center;
+  /* 底部文字 */
+  .footer {
+    margin-top: 40px;
+    text-align: center;
+    color: #666;
+    font-size: 14px;
+    padding-bottom: 20px;
   }
-  .modal-box {
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    width: 90%;
-    max-width: 400px;
-  }
-  .modal-box input {
-    margin-bottom: 15px;
-  }
-  .modal-box button {
-    background: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 18px;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-right: 10px;
+  .footer-main {
+    font-size: 15px;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 4px;
   }
 </style>
 </head>
@@ -84,42 +98,37 @@
   <h1 class="site-title">KK-Stuengine</h1>
 </div>
 
-<input type="text" id="searchInput" placeholder="Search Physics B1、B2、C1...">
-<div id="results"></div>
-
-<div class="add-btn" onclick="openUpload()">+</div>
-
-<div class="upload-modal" id="uploadModal">
-  <div class="modal-box">
-    <h3>Add New PDF</h3>
-    <input type="text" id="pdfName" placeholder="Enter name (e.g. Physics B1)">
-    <input type="file" id="pdfFile" accept="application/pdf">
-    <button onclick="savePDF()">Add</button>
-    <button onclick="closeUpload()">Cancel</button>
-  </div>
+<div class="main-content">
+  <input type="text" id="searchInput" placeholder="Search Physics B1、B2、C1...">
+  <div id="results"></div>
 </div>
+
+<!-- 底部 -->
+<div class="footer">
+  <div class="footer-main">KK-Stuengine - For Every Student</div>
+  <div>Revision Engine for Students</div>
+  <div style="margin-top:4px;">Copyright reserved © KK-Stuengine</div>
+</div>
+
+<!-- Contact WhatsApp -->
+<button class="contact-btn" onclick="window.open('https://wa.me/85265753900','_blank')">
+  Contact Us
+</button>
 
 <script>
 let allFiles = [];
 
-// 加载所有数据：GitHub + 本地
 async function loadAllFiles() {
   try {
-    // 旧文件
     const res = await fetch("https://raw.githubusercontent.com/kevin27-glitch/pdf_research/refs/heads/main/links.json");
     const json = await res.json();
     const oldFiles = json.map(item => ({ name: item.key, url: item.url }));
-    
-    // 新文件
-    const localFiles = JSON.parse(localStorage.getItem("myPDFs")) || [];
-    
-    allFiles = [...oldFiles, ...localFiles];
+    allFiles = [...oldFiles];
   } catch (e) {
-    allFiles = JSON.parse(localStorage.getItem("myPDFs")) || [];
+    allFiles = [];
   }
 }
 
-// 搜索
 function renderResults(keyword) {
   const results = document.getElementById("results");
   results.innerHTML = "";
@@ -134,38 +143,11 @@ function renderResults(keyword) {
   });
 }
 
-// 输入搜索
-document.getElementById("searchInput").addEventListener("input", async function(e) {
+document.getElementById("searchInput").addEventListener("input", async function (e) {
   await loadAllFiles();
   renderResults(e.target.value);
 });
 
-// 弹窗
-function openUpload() { document.getElementById("uploadModal").style.display = "flex"; }
-function closeUpload() { document.getElementById("uploadModal").style.display = "none"; }
-
-// 保存文件 + 自动刷新！
-async function savePDF() {
-  const name = document.getElementById("pdfName").value.trim();
-  const file = document.getElementById("pdfFile").files[0];
-  if (!name || !file) { alert("Please fill name and choose PDF!"); return; }
-
-  const url = URL.createObjectURL(file);
-  const local = JSON.parse(localStorage.getItem("myPDFs")) || [];
-  local.push({ name, url });
-  localStorage.setItem("myPDFs", JSON.stringify(local));
-
-  // 自动刷新列表
-  await loadAllFiles();
-  renderResults(document.getElementById("searchInput").value);
-
-  document.getElementById("pdfName").value = "";
-  document.getElementById("pdfFile").value = "";
-  closeUpload();
-  alert("PDF uploaded & showing now!");
-}
-
-// 初始加载
 loadAllFiles();
 </script>
 
