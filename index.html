@@ -15,7 +15,7 @@
   .logo {
     width: 48px;
     height: 48px;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 960"><rect width="960" height="960" fill="%23f5f5f5"/><path d="M480 220c-80 0-155 32-210 85l-10 10c-55 55-85 130-85 210s30 155 85 210l10 10c55 55 130 85 210 85s155-30 210-85l10-10c55-55 85-130 85-210s-30-155-85-210l-10-10c-55-53-130-85-210-85zm0 40c65 0 125 25 170 70l8 8c45 45 70 105 70 170s-25 125-70 170l-8 8c-45 45-105 70-170 70s-125-25-170-70l-8-8c-45-45-70-105-70-170s25-125 70-170l8-8c45-45 105-70 170-70z" fill="%23007bff"/><path d="M480 220v560M270 440h420M480 330v300M375 440v200M585 440v200M322.5 385h315M322.5 495h315M322.5 605h315" stroke="white" stroke-width="12" fill="none"/><path d="M480 220c-60 0-115 20-160 55l-10 10c-45 45-65 100-65 160s20 115 65 160l10 10c45 45 100 65 160 65s115-20 160-65l10-10c45-45 65-100 65-160s-20-115-65-160l-10-10c-45-35-100-55-160-55z" stroke="white" stroke-width="12" fill="none"/></svg>');
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 960"><rect width="960" height="960" fill="%23f5f5f5"/><path d="M480 220c-80 0-155 32-210 85l-10 10c-55 55-85 130-85 210s30 155 85 210l10 10c55 55 130 85 210 85s155-30 210-85l10-10c55-55 85-130 85-210s-30-155-85-210l-10-10c-55-53-130-85-210-85zm0 40c65 0 125 25 170 70l8 8c45 45 70 105 70 170s-25 125-70 170l-8 8c-45 45-105 70-170 70s-125-25-170-70l-8-8c-45-45-70-105-70-170s25-125 70-170l8-8c45-45-105-70-170-70z" fill="%23007bff"/><path d="M480 220v560M270 440h420M480 330v300M375 440v200M585 440v200M322.5 385h315M322.5 495h315M322.5 605h315" stroke="white" stroke-width="12" fill="none"/><path d="M480 220c-60 0-115 20-160 55l-10 10c-45 45-65 100-65 160s20 115 65 160l10 10c45 45 100 65 160 65s115-20 160-65l10-10c45-45 65-100 65-160s-20-115-65-160l-10-10c-45-35-100-55-160-55z" stroke="white" stroke-width="12" fill="none"/></svg>');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -100,80 +100,74 @@
 </div>
 
 <script>
-let allData = [];
+// 强制加载 GitHub 旧文件 + 本地新文件
+let combinedList = [];
 
-// 1. 加载你 GitHub 旧的文件
-fetch("https://raw.githubusercontent.com/kevin27-glitch/pdf_research/refs/heads/main/links.json")
-  .then(res => res.json())
-  .then(githubData => {
-    const formatted = githubData.map(item => ({
+async function loadAllData() {
+  try {
+    // 1. 加载 GitHub JSON
+    const res = await fetch("https://raw.githubusercontent.com/kevin27-glitch/pdf_research/refs/heads/main/links.json");
+    const jsonData = await res.json();
+    const githubFiles = jsonData.map(item => ({
       name: item.key,
       url: item.url
     }));
-    allData = [...formatted];
-    // 2. 加上本地上传的新文件
-    const localData = JSON.parse(localStorage.getItem("myPDFs")) || [];
-    allData = [...formatted, ...localData];
-    console.log("已加载 GitHub + 本地文件");
-  })
-  .catch(err => {
-    // 加载失败也显示本地文件
-    const localData = JSON.parse(localStorage.getItem("myPDFs")) || [];
-    allData = localData;
-  });
 
-// 搜索
+    // 2. 加载本地上传的文件
+    const localFiles = JSON.parse(localStorage.getItem("myPDFs")) || [];
+
+    // 3. 合并：旧 + 新
+    combinedList = [...githubFiles, ...localFiles];
+    console.log("✅ 旧文件已加载:", githubFiles);
+  } catch (e) {
+    // 失败只显示本地
+    combinedList = JSON.parse(localStorage.getItem("myPDFs")) || [];
+  }
+}
+
+// 页面打开时先加载数据
+loadAllData();
+
+// 搜索功能
 const searchInput = document.getElementById('searchInput');
 const results = document.getElementById('results');
 
-searchInput.addEventListener('input', function(e) {
+searchInput.addEventListener('input', async function(e) {
   const keyword = e.target.value.trim().toLowerCase();
   results.innerHTML = '';
   if (!keyword) return;
 
-  const filtered = allData.filter(item =>
+  // 确保数据加载完再搜索
+  if (combinedList.length === 0) await loadAllData();
+
+  const filtered = combinedList.filter(item =>
     item.name.toLowerCase().includes(keyword)
   );
 
   filtered.forEach(item => {
-    results.innerHTML += `
-      <div class="result">
-        <a href="${item.url}" target="_blank">${item.name}</a>
-      </div>
-    `;
+    results.innerHTML += `<div class="result"><a href="${item.url}" target="_blank">${item.name}</a></div>`;
   });
 });
 
-// 弹窗
-function openUpload() {
-  document.getElementById("uploadModal").style.display = "flex";
-}
-function closeUpload() {
-  document.getElementById("uploadModal").style.display = "none";
-}
+// 上传弹窗
+function openUpload() { document.getElementById("uploadModal").style.display = "flex"; }
+function closeUpload() { document.getElementById("uploadModal").style.display = "none"; }
 
-// 保存新 PDF 到本地
+// 保存新 PDF
 function savePDF() {
   const name = document.getElementById("pdfName").value.trim();
   const file = document.getElementById("pdfFile").files[0];
-  if (!name || !file) {
-    alert("Please enter name and select PDF!");
-    return;
-  }
+  if (!name || !file) { alert("Please enter name and select PDF!"); return; }
 
   const url = URL.createObjectURL(file);
-  const localData = JSON.parse(localStorage.getItem("myPDFs")) || [];
-  localData.push({ name, url });
-  localStorage.setItem("myPDFs", JSON.stringify(localData));
-
-  // 刷新列表
-  const githubPart = allData.filter(item => !item.url.startsWith("blob:"));
-  allData = [...githubPart, ...localData];
+  const local = JSON.parse(localStorage.getItem("myPDFs")) || [];
+  local.push({ name, url });
+  localStorage.setItem("myPDFs", JSON.stringify(local));
 
   document.getElementById("pdfName").value = "";
   document.getElementById("pdfFile").value = "";
   closeUpload();
-  alert("PDF added successfully!");
+  alert("PDF added!");
 }
 </script>
 
