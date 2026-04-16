@@ -2,9 +2,29 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<title>IB_PDF Searching Engine</title>
+<title>KK-Stuengine | IB PDF Search</title>
 <style>
   body { font-family: Arial, sans-serif; max-width: 800px; margin: 20px auto; padding: 0 15px; }
+
+  /* 顶部导航栏：logo + 网站名 */
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+  }
+  .logo {
+    width: 45px;
+    height: 45px;
+    border-radius: 8px;
+  }
+  .site-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: #007bff;
+    margin: 0;
+  }
+
   input { width: 100%; padding: 10px; font-size: 18px; margin-bottom: 20px; box-sizing: border-box; }
   .result { padding: 12px; border-bottom: 1px solid #eee; }
   .result a { font-size: 16px; color: #007bff; text-decoration: none; }
@@ -28,7 +48,12 @@
 </head>
 <body>
 
-<h1>PDF Search</h1>
+<!-- 顶部：Logo + 网站名称 -->
+<div class="header">
+  <img class="logo" src="https://p26-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/276beeca90304baf9f00a388145ddc5a.png" alt="Logo">
+  <h1 class="site-title">KK-Stuengine</h1>
+</div>
+
 <input type="text" id="searchInput" placeholder="Search Physics B1、B2、C1...">
 <div id="results"></div>
 
@@ -67,7 +92,7 @@ searchInput.addEventListener('input', function(e) {
   });
 });
 
-// 添加新链接（可打开你的编辑页）
+// 添加新链接
 function addNewLink() {
   const gistUrl = "https://gist.github.com/你的用户名/你的GistID";
   window.open(gistUrl, "_blank");
