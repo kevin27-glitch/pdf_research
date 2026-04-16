@@ -30,47 +30,46 @@
 
 <h1>PDF Search</h1>
 <input type="text" id="searchInput" placeholder="Search Physics B1、B2、C1...">
-
 <div id="results"></div>
 
-<!-- Upload -->
 <div class="add-btn" onclick="addNewLink()">+</div>
 
 <script>
-// Put your link here（Subject+Topic+Link）
+// 全局存储链接数据
+window.linkData = [];
 
-// 1. 从 links.json 读取数据
+// 加载 JSON 数据
 fetch("https://raw.githubusercontent.com/kevin27-glitch/pdf_research/refs/heads/main/links.json")
   .then(res => res.json())
   .then(data => {
     window.linkData = data;
-  });
+    console.log("数据加载成功：", data);
+  })
+  .catch(err => console.error("加载失败", err));
 
-// 先获取元素
+// 获取 DOM
 const searchInput = document.getElementById('searchInput');
 const results = document.getElementById('results');
 
-// 只绑定一次事件监听
+// 搜索功能
 searchInput.addEventListener('input', function(e) {
   const keyword = e.target.value.trim().toLowerCase();
-  // 第一步就清空所有旧结果
   results.innerHTML = '';
-  // 无输入直接返回
+
   if (!keyword) return;
-  // 过滤并渲染新结果
-  const filtered = window.linkData.filter(item => 
-    item.key.toLowerCase().startsWith(keyword)
+
+  const filtered = window.linkData.filter(item =>
+    item.key.toLowerCase().includes(keyword)
   );
+
   filtered.forEach(item => {
     results.innerHTML += `<div class="result"><a href="${item.url}" target="_blank">${item.key}</a></div>`;
   });
 });
-  });
-});
 
-// 3. 添加新链接（跳转到 GitHub Gist 编辑页）
+// 添加新链接（可打开你的编辑页）
 function addNewLink() {
-  const gistUrl = "https://gist.github.com/你的用户名/你的Gist ID";
+  const gistUrl = "https://gist.github.com/你的用户名/你的GistID";
   window.open(gistUrl, "_blank");
 }
 </script>
