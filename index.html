@@ -59,23 +59,29 @@
     flex: 1;
   }
 
-  /* Contact Us 按钮 */
-  .contact-btn {
+  /* 右侧按钮组 */
+  .side-btn {
     position: fixed;
-    bottom: 100px;
     right: 25px;
-    background: #25D366;
-    color: white;
-    border: none;
     padding: 10px 16px;
     border-radius: 30px;
     font-size: 14px;
     font-weight: bold;
+    border: none;
+    color: white;
     cursor: pointer;
     box-shadow: 0 3px 10px rgba(0,0,0,0.2);
   }
+  .story-btn {
+    bottom: 170px;
+    background: #007bff;
+  }
+  .contact-btn {
+    bottom: 100px;
+    background: #25D366;
+  }
 
-  /* 底部文字 */
+  /* 底部 */
   .footer {
     margin-top: 40px;
     text-align: center;
@@ -88,6 +94,43 @@
     font-weight: bold;
     color: #007bff;
     margin-bottom: 4px;
+  }
+
+  /* Our Story 弹窗 */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+  }
+  .modal-box {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+  .modal-box h2 {
+    color: #007bff;
+    margin-top: 0;
+  }
+  .modal-box h3 {
+    color: #007bff;
+    margin-bottom: 6px;
+  }
+  .close-btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
   }
 </style>
 </head>
@@ -103,27 +146,49 @@
   <div id="results"></div>
 </div>
 
-<!-- 底部 -->
+<!-- 底部文字 -->
 <div class="footer">
   <div class="footer-main">KK-Stuengine - For Every Student</div>
   <div>Revision Engine for Students</div>
-  <div style="margin-top:4px;">All Rights reserved © KK-Stuengine</div>
+  <div style="margin-top:4px;">Copyright reserved © KK-Stuengine</div>
 </div>
 
-<!-- Contact WhatsApp -->
-<button class="contact-btn" onclick="window.open('https://wa.me/85265753900','_blank')">
-  Contact Us
-</button>
+<!-- 右侧按钮 -->
+<button class="side-btn story-btn" onclick="openStory()">Our Story</button>
+<button class="side-btn contact-btn" onclick="window.open('https://wa.me/85265753900','_blank')">Contact Us</button>
+
+<!-- Our Story 弹窗内容 -->
+<div class="modal" id="storyModal">
+  <div class="modal-box">
+    <h2>Our Story</h2>
+    
+    <p>KK-Stuengine was founded to make quality study resources simple, accessible, and organized for students everywhere. We believe learning should be easier, and revision should not be a stressful search.</p>
+
+    <h3>Our Team</h3>
+
+    <p><strong>Founder:</strong><br>
+    <strong>Kevin Wang</strong><br>
+    Kevin is the founder and chief editor of KK-Stuengine. He is a student at Li Po Chun United World College (LPCUWC) in Hong Kong, passionate about education, technology, and student welfare. He built this platform to help students save time, balance their studies more effectively, and access well-structured revision materials in one place. His goal is to create a free, clean, and reliable study engine for every student.</p>
+
+    <p><strong>Co-Founder:</strong><br>
+    <strong>Kyle Tsang</strong><br>
+    Kyle is an academic enthusiast with a strong interest in aerospace engineering, innovation, and problem-solving. He supports the platform with technical insights, content curation, and the vision of making education more efficient. Kyle believes that well-organized resources can greatly improve learning efficiency and empower students to explore their potential while staying focused and balanced.</p>
+
+    <p>Together, we aim to build a trusted study companion built by students, for students.</p>
+
+    <button class="close-btn" onclick="closeStory()">Close</button>
+  </div>
+</div>
 
 <script>
+// 搜索功能
 let allFiles = [];
 
 async function loadAllFiles() {
   try {
     const res = await fetch("https://raw.githubusercontent.com/kevin27-glitch/pdf_research/refs/heads/main/links.json");
     const json = await res.json();
-    const oldFiles = json.map(item => ({ name: item.key, url: item.url }));
-    allFiles = [...oldFiles];
+    allFiles = json.map(item => ({ name: item.key, url: item.url }));
   } catch (e) {
     allFiles = [];
   }
@@ -133,11 +198,9 @@ function renderResults(keyword) {
   const results = document.getElementById("results");
   results.innerHTML = "";
   if (!keyword) return;
-
   const filtered = allFiles.filter(item =>
     item.name.toLowerCase().includes(keyword.toLowerCase())
   );
-
   filtered.forEach(item => {
     results.innerHTML += `<div class="result"><a href="${item.url}" target="_blank">${item.name}</a></div>`;
   });
@@ -147,6 +210,14 @@ document.getElementById("searchInput").addEventListener("input", async function 
   await loadAllFiles();
   renderResults(e.target.value);
 });
+
+// Story 弹窗
+function openStory() {
+  document.getElementById("storyModal").style.display = "flex";
+}
+function closeStory() {
+  document.getElementById("storyModal").style.display = "none";
+}
 
 loadAllFiles();
 </script>
