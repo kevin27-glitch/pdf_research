@@ -6,7 +6,6 @@
 <style>
   body { font-family: Arial, sans-serif; max-width: 800px; margin: 20px auto; padding: 0 15px; }
 
-  /* 顶部导航栏：logo + 网站名 */
   .header {
     display: flex;
     align-items: center;
@@ -14,9 +13,9 @@
     margin-bottom: 25px;
   }
   .logo {
-    width: 54px;
-    height: 54px;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 960"><rect width="960" height="960" fill="%23f5f5f5"/><path d="M480 220c-80 0-155 32-210 85l-10 10c-55 55-85 130-85 210s30 155 85 210l10 10c55 55 130 85 210 85s155-30 210-85l10-10c55-55 85-130 85-210s-30-155-85-210l-10-10c-55-53-130-85-210-85zm0 40c65 0 125 25 170 70l8 8c45 45 70 105 70 170s-25 125-70 170l-8 8c-45 45-105 70-170 70s-125-25-170-70l-8-8c-45-45-70-105-70-170s25-125 70-170l8-8c45-45 105-70 170-70z" fill="%23007bff"/><path d="M480 220v560M270 440h420M480 330v300M375 440v200M585 440v200M322.5 385h315M322.5 495h315M322.5 605h315" stroke="white" stroke-width="12" fill="none"/><path d="M480 220c-60 0-115 20-160 55l-10 10c-45 45-65 100-65 160s20 115 65 160l10 10c45 45 100 65 160 65s115-20 160-65l10-10c45-45 65-100 65-160s-20-115-65-160l-10-10c-45-35-100-55-160-55z" stroke="white" stroke-width="12" fill="none"/><path d="M200 560l280 280M760 560L480 840" stroke="white" stroke-width="12" fill="none"/><text x="480" y="780" font-family="Arial, sans-serif" font-size="80" font-weight="bold" fill="%23007bff" text-anchor="middle" transform="rotate(-15 480 480)">KK-Stuengine</text></svg>');
+    width: 48px;
+    height: 48px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 960"><rect width="960" height="960" fill="%23f5f5f5"/><path d="M480 220c-80 0-155 32-210 85l-10 10c-55 55-85 130-85 210s30 155 85 210l10 10c55 55 130 85 210 85s155-30 210-85l10-10c55-55 85-130 85-210s-30-155-85-210l-10-10c-55-53-130-85-210-85zm0 40c65 0 125 25 170 70l8 8c45 45 70 105 70 170s-25 125-70 170l-8 8c-45 45-105 70-170 70s-125-25-170-70l-8-8c-45-45-70-105-70-170s25-125 70-170l8-8c45-45 105-70 170-70z" fill="%23007bff"/><path d="M480 220v560M270 440h420M480 330v300M375 440v200M585 440v200M322.5 385h315M322.5 495h315M322.5 605h315" stroke="white" stroke-width="12" fill="none"/><path d="M480 220c-60 0-115 20-160 55l-10 10c-45 45-65 100-65 160s20 115 65 160l10 10c45 45 100 65 160 65s115-20 160-65l10-10c45-45 65-100 65-160s-20-115-65-160l-10-10c-45-35-100-55-160-55z" stroke="white" stroke-width="12" fill="none"/></svg>');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -32,6 +31,7 @@
   .result { padding: 12px; border-bottom: 1px solid #eee; }
   .result a { font-size: 16px; color: #007bff; text-decoration: none; }
   .result a:hover { text-decoration: underline; }
+
   .add-btn {
     position: fixed;
     bottom: 25px;
@@ -47,58 +47,109 @@
     cursor: pointer;
     box-shadow: 0 3px 10px rgba(0,0,0,0.2);
   }
+
+  .upload-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    justify-content: center;
+    align-items: center;
+  }
+  .modal-box {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+  }
+  .modal-box input {
+    margin-bottom: 15px;
+  }
+  .modal-box button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
 </style>
 </head>
 <body>
 
-<!-- 顶部：你的专属Logo + 网站名称 -->
 <div class="header">
-  <div class="logo" alt="KK-Stuengine Logo"></div>
+  <div class="logo"></div>
   <h1 class="site-title">KK-Stuengine</h1>
 </div>
 
 <input type="text" id="searchInput" placeholder="Search Physics B1、B2、C1...">
 <div id="results"></div>
 
-<div class="add-btn" onclick="addNewLink()">+</div>
+<div class="add-btn" onclick="openUpload()">+</div>
+
+<div class="upload-modal" id="uploadModal">
+  <div class="modal-box">
+    <h3>Add New PDF</h3>
+    <input type="text" id="pdfName" placeholder="Enter name (e.g. Physics B1)">
+    <input type="file" id="pdfFile" accept="application/pdf">
+    <button onclick="savePDF()">Add</button>
+    <button onclick="closeUpload()">Cancel</button>
+  </div>
+</div>
 
 <script>
-// 全局存储链接数据
-window.linkData = [];
+// 本地存储，刷新不消失
+let linkData = JSON.parse(localStorage.getItem("myPDFs")) || [];
 
-// 加载 JSON 数据
-fetch("https://raw.githubusercontent.com/kevin27-glitch/pdf_research/refs/heads/main/links.json")
-  .then(res => res.json())
-  .then(data => {
-    window.linkData = data;
-    console.log("数据加载成功：", data);
-  })
-  .catch(err => console.error("加载失败", err));
-
-// 获取 DOM
+// 搜索
 const searchInput = document.getElementById('searchInput');
 const results = document.getElementById('results');
 
-// 搜索功能
 searchInput.addEventListener('input', function(e) {
   const keyword = e.target.value.trim().toLowerCase();
   results.innerHTML = '';
-
   if (!keyword) return;
 
-  const filtered = window.linkData.filter(item =>
-    item.key.toLowerCase().includes(keyword)
+  const filtered = linkData.filter(item =>
+    item.name.toLowerCase().includes(keyword)
   );
 
   filtered.forEach(item => {
-    results.innerHTML += `<div class="result"><a href="${item.url}" target="_blank">${item.key}</a></div>`;
+    results.innerHTML += `
+      <div class="result">
+        <a href="${item.url}" target="_blank">${item.name}</a>
+      </div>
+    `;
   });
 });
 
-// 添加新链接
-function addNewLink() {
-  const gistUrl = "https://gist.github.com/你的用户名/你的GistID";
-  window.open(gistUrl, "_blank");
+// 上传弹窗
+function openUpload() {
+  document.getElementById("uploadModal").style.display = "flex";
+}
+function closeUpload() {
+  document.getElementById("uploadModal").style.display = "none";
+}
+
+// 保存PDF到本地（永久存在）
+function savePDF() {
+  const name = document.getElementById("pdfName").value.trim();
+  const file = document.getElementById("pdfFile").files[0];
+  if (!name || !file) {
+    alert("Please enter name and select PDF!");
+    return;
+  }
+
+  const url = URL.createObjectURL(file);
+  linkData.push({ name, url });
+  localStorage.setItem("myPDFs", JSON.stringify(linkData));
+
+  document.getElementById("pdfName").value = "";
+  document.getElementById("pdfFile").value = "";
+  closeUpload();
+  alert("Added successfully!");
 }
 </script>
 
