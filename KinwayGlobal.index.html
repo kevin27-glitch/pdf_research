@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>啟誠寰宇有限公司 Kinway Global Limited</title>
+<link rel="stylesheet" href="https://miaoda.feishu.cn/fonts/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=Noto+Sans:wght@300;400;500;700&family=Space+Mono:wght@400;700&display=swap">
+<style>
+  :root{
+    --navy:#0C1726;
+    --navy-2:#12213A;
+    --navy-3:#1B2E4B;
+    --gold:#C9A24B;
+    --gold-soft:#E5C87B;
+    --paper:#F5F1E8;
+    --paper-dim:#E9E2D3;
+    --slate:#8A94A3;
+    --ink:#1A2433;
+    --stamp:#B4432C;
+    --line:rgba(201,162,75,0.25);
+    --display-en:'Cormorant Garamond', 'Noto Serif SC', Georgia, serif;
+    --display-zh:'Noto Serif SC', 'Noto Sans SC', serif;
+    --body:'Noto Sans', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    --mono:'Space Mono', 'SFMono-Regular', Consolas, monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:var(--body);color:var(--paper);background:var(--navy);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+  .mono{font-family:var(--mono);letter-spacing:0.06em;}
+
+  /* ===== 顶部导航 ===== */
+  .topnav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(12,23,38,0.82);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;}
+  .brand{display:flex;align-items:baseline;gap:10px;}
+  .brand-en{font-family:var(--display-en);font-weight:700;font-size:19px;color:var(--paper);letter-spacing:0.04em;}
+  .brand-en em{color:var(--gold);font-style:normal;}
+  .brand-zh{font-family:var(--display-zh);font-size:12px;color:var(--slate);letter-spacing:0.18em;}
+  .nav-links{display:flex;align-items:center;gap:6px;}
+  .nav-links a.nav-item{padding:8px 14px;font-size:13px;color:var(--slate);transition:color .2s;border-radius:6px;min-height:44px;display:flex;align-items:center;}
+  .nav-links a.nav-item:hover{color:var(--gold);}
+  .lang-switch{display:flex;align-items:center;gap:2px;margin-left:14px;border:1px solid var(--line);border-radius:999px;padding:3px;}
+  .lang-switch button{background:transparent;border:none;color:var(--slate);font-size:12px;padding:6px 11px;border-radius:999px;cursor:pointer;min-height:32px;transition:all .2s;font-family:var(--body);}
+  .lang-switch button.active{background:var(--gold);color:#0C1726;font-weight:700;}
+
+  /* ===== Hero ===== */
+  .hero{position:relative;padding:150px 0 90px;overflow:hidden;}
+  .hero-bg{position:absolute;inset:0;background:radial-gradient(1200px 600px at 75% 20%, rgba(27,46,75,0.9), transparent 60%), radial-gradient(800px 500px at 10% 80%, rgba(201,162,75,0.10), transparent 60%);}
+  .hero-grid{display:grid;grid-template-columns:1.15fr 0.85fr;gap:48px;align-items:center;position:relative;}
+  .hero-eyebrow{font-family:var(--mono);font-size:12px;color:var(--gold);letter-spacing:0.22em;margin-bottom:18px;}
+  .hero-title{font-family:var(--display-en),var(--display-zh);font-weight:700;font-size:clamp(42px,6vw,72px);line-height:1.05;margin-bottom:20px;}
+  .hero-title .zh{display:block;font-family:var(--display-zh);font-size:clamp(26px,3.4vw,40px);color:var(--gold-soft);margin-top:14px;letter-spacing:0.1em;}
+  html[lang="en"] .hero-title .zh{font-family:var(--display-en);letter-spacing:0.01em;font-size:clamp(24px,3vw,38px);}
+  .hero-sub{font-size:17px;color:var(--slate);max-width:540px;margin-bottom:26px;}
+  .hero-meta{font-family:var(--mono);font-size:13px;color:var(--gold-soft);line-height:2;margin-bottom:34px;}
+  .hero-cta{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 26px;border-radius:999px;font-size:14px;font-weight:600;transition:all .2s;cursor:pointer;border:1px solid transparent;}
+  .btn-gold{background:var(--gold);color:#0C1726;}
+  .btn-gold:hover{background:var(--gold-soft);}
+  .btn-ghost{border-color:var(--line);color:var(--paper);}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+  .hero-visual{position:relative;}
+  .hero-visual img.cover{width:100%;border-radius:18px;box-shadow:0 40px 80px -30px rgba(0,0,0,0.7);border:1px solid var(--line);}
+  .route-tag{position:absolute;left:-24px;bottom:-22px;background:var(--navy-3);border:1px solid var(--line);border-radius:14px;padding:14px 18px;font-family:var(--mono);font-size:12px;color:var(--paper);line-height:1.9;box-shadow:0 20px 40px -18px rgba(0,0,0,0.6);}
+  .route-tag b{color:var(--gold);}
+
+  /* ===== 航线弧线签名元素 ===== */
+  .route-band{position:relative;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--navy-2);}
+  .route-band svg{width:100%;height:auto;display:block;}
+  .route-band .apt{font-family:var(--mono);}
+  .apt-label{font-size:12px;fill:var(--gold-soft);letter-spacing:0.1em;}
+  .apt-sub{font-size:10px;fill:var(--slate);}
+  .apt-dot{fill:var(--gold);}
+  .route-arc{fill:none;stroke:var(--gold);stroke-width:1.6;stroke-dasharray:5 7;}
+  .route-plane{fill:var(--gold-soft);}
+
+  /* ===== 通用章节 ===== */
+  section{padding:96px 0;position:relative;}
+  .section-head{margin-bottom:48px;}
+  .kicker{font-family:var(--mono);font-size:12px;color:var(--gold);letter-spacing:0.22em;margin-bottom:12px;}
+  .section-title{font-family:var(--display-zh),var(--display-en);font-size:clamp(28px,4vw,42px);font-weight:700;line-height:1.2;}
+  .section-title .en{display:block;font-family:var(--display-en);font-size:0.62em;color:var(--slate);letter-spacing:0.08em;margin-top:8px;}
+
+  /* ===== 关于 ===== */
+  .about-grid{display:grid;grid-template-columns:0.9fr 1.1fr;gap:56px;align-items:center;}
+  .about-grid.reverse .about-img{order:2;}
+  .about-img img{border-radius:18px;border:1px solid var(--line);box-shadow:0 30px 60px -28px rgba(0,0,0,0.65);}
+  .about-body p{color:var(--slate);margin-bottom:18px;font-size:15.5px;}
+  .about-body p b{color:var(--paper);}
+  .name-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px;}
+  .name-card{background:var(--navy-2);border:1px solid var(--line);border-radius:14px;padding:20px;position:relative;overflow:hidden;}
+  .name-card .char{font-family:var(--display-zh);font-size:34px;color:var(--gold);display:block;margin-bottom:6px;}
+  .name-card h4{font-size:14px;margin-bottom:6px;color:var(--paper);}
+  .name-card p{font-size:13px;color:var(--slate);margin:0;}
+
+  /* ===== 产品 ===== */
+  .product{background:var(--navy-2);}
+  .product-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
+  .product-img img{border-radius:18px;border:1px solid var(--line);box-shadow:0 30px 60px -28px rgba(0,0,0,0.65);}
+  .prod-tag{display:inline-block;font-family:var(--mono);font-size:12px;color:var(--gold);border:1px solid var(--line);border-radius:999px;padding:7px 15px;margin-bottom:20px;letter-spacing:0.06em;}
+  .prod-desc{color:var(--slate);font-size:15.5px;margin-bottom:28px;line-height:2;}
+  .prod-desc b{color:var(--paper);}
+  .feat-list{display:grid;grid-template-columns:1fr 1fr;gap:16px 22px;}
+  .feat{display:flex;gap:12px;align-items:flex-start;}
+  .feat .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);margin-top:9px;flex-shrink:0;}
+  .feat b{display:block;font-size:14px;color:var(--paper);margin-bottom:2px;}
+  .feat span{font-size:13px;color:var(--slate);}
+
+  /* ===== 团队 ===== */
+  .team-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
+  .team-body p{color:var(--slate);font-size:15.5px;margin-bottom:18px;}
+  .team-body p b{color:var(--paper);}
+  .team-flag{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px;}
+  .team-flag span{font-family:var(--mono);font-size:12px;color:var(--gold-soft);border:1px solid var(--line);border-radius:999px;padding:8px 15px;letter-spacing:0.04em;}
+  .team-img img{border-radius:18px;border:1px solid var(--line);box-shadow:0 30px 60px -28px rgba(0,0,0,0.65);}
+
+  /* ===== 联系 ===== */
+  .contact{background:var(--navy-2);}
+  .contact-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:10px;}
+  .c-card{background:var(--navy);border:1px solid var(--line);border-radius:16px;padding:28px 24px;transition:transform .2s,border-color .2s;display:block;}
+  .c-card:hover{transform:translateY(-4px);border-color:var(--gold);}
+  .c-icon{width:44px;height:44px;border-radius:12px;background:rgba(201,162,75,0.12);display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:var(--gold);}
+  .c-icon svg{width:22px;height:22px;}
+  .c-card h4{font-size:15px;margin-bottom:8px;color:var(--gold-soft);letter-spacing:0.06em;font-family:var(--mono);}
+  .c-card .c-line{font-size:15px;color:var(--paper);word-break:break-all;}
+  .c-card .c-hint{font-size:12.5px;color:var(--slate);margin-top:6px;}
+
+  /* ===== 弹幕心愿墙 ===== */
+  .danmaku-section{overflow:hidden;}
+  .danmaku-stage{position:relative;height:460px;border-radius:20px;border:1px solid var(--line);background:radial-gradient(900px 400px at 50% 0%, #162A46, #0C1726 70%);overflow:hidden;}
+  .danmaku-stage .stage-hint{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;z-index:2;pointer-events:none;}
+  .stage-hint .hint-zh{font-family:var(--display-zh);font-size:26px;color:rgba(245,241,232,0.5);}
+  .stage-hint .hint-mono{font-family:var(--mono);font-size:12px;color:rgba(138,148,163,0.6);letter-spacing:0.2em;margin-top:8px;}
+  .danmaku-item{position:absolute;left:100%;white-space:nowrap;font-size:16px;color:rgba(245,241,232,0.88);text-shadow:0 2px 8px rgba(0,0,0,0.6);animation:danmakuMove linear infinite;will-change:transform;z-index:1;}
+  .danmaku-item.gold{color:var(--gold-soft);font-family:var(--display-zh);font-size:19px;}
+  .danmaku-item.mono{font-family:var(--mono);font-size:13px;color:var(--slate);}
+  @keyframes danmakuMove{from{transform:translateX(0);}to{transform:translateX(calc(-120vw - 200%));}}
+  @media (prefers-reduced-motion: reduce){
+    .danmaku-item{animation:none !important;}
+    html{scroll-behavior:auto;}
+  }
+  .danmaku-note{text-align:center;color:var(--slate);font-size:13px;margin-top:22px;letter-spacing:0.04em;}
+
+  /* ===== Footer ===== */
+  footer{border-top:1px solid var(--line);padding:44px 0 60px;background:var(--navy);}
+  .foot-inner{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;align-items:center;}
+  .foot-brand{font-family:var(--display-en),var(--display-zh);font-size:16px;font-weight:600;}
+  .foot-brand em{color:var(--gold);font-style:normal;}
+  .foot-note{font-size:12.5px;color:var(--slate);line-height:2;text-align:right;}
+  .foot-note .mono{font-size:11.5px;}
+
+  /* ===== 响应式 ===== */
+  @media (max-width:960px){
+    .hero-grid,.about-grid,.about-grid.reverse .about-img,.product-grid,.team-grid{grid-template-columns:1fr;gap:40px;}
+    .about-grid.reverse .about-img{order:0;}
+    .route-tag{left:12px;}
+    .contact-cards{grid-template-columns:1fr;}
+    .feat-list{grid-template-columns:1fr;}
+    .nav-links a.nav-item{display:none;}
+    .name-cards{grid-template-columns:1fr;}
+    section{padding:70px 0;}
+    .danmaku-stage{height:360px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== 顶部导航 ===== -->
+<header class="topnav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top">
+      <span class="brand-en">Kinway <em>Global</em></span>
+      <span class="brand-zh" data-i18n="brand.zh">啟誠寰宇有限公司</span>
+    </a>
+    <nav class="nav-links">
+      <a class="nav-item" href="#about" data-i18n="nav.about">关于我们</a>
+      <a class="nav-item" href="#product" data-i18n="nav.product">我们的产品</a>
+      <a class="nav-item" href="#team" data-i18n="nav.team">我们是谁</a>
+      <a class="nav-item" href="#contact" data-i18n="nav.contact">联系我们</a>
+      <div class="lang-switch" role="group" aria-label="language">
+        <button type="button" data-lang="zh-CN" class="active">简</button>
+        <button type="button" data-lang="zh-TW">繁</button>
+        <button type="button" data-lang="en">EN</button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== Hero ===== -->
+<div class="hero" id="top">
+  <div class="hero-bg"></div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <div class="hero-eyebrow mono" data-i18n="hero.eyebrow">KINWAY GLOBAL LIMITED · EST. HONG KONG 2026</div>
+      <h1 class="hero-title">Kinway Global
+        <span class="zh" data-i18n="hero.titleZh">啟誠寰宇有限公司</span>
+      </h1>
+      <p class="hero-sub" data-i18n="hero.sub">我们是一群热爱飞行的青少年，为飞友打造纪念级的消费级飞行日志。把每一次起飞、每一程航线，都写成可以反复翻阅的纪念。</p>
+      <div class="hero-meta">
+        <div>Designed in <b>Kai Tak, Hong Kong (HKG)</b></div>
+        <div>Printed in <b>Beijing, China (PEK / PKX)</b></div>
+      </div>
+      <div class="hero-cta">
+        <a class="btn btn-gold" href="#product" data-i18n="hero.cta1">看看我们的日志</a>
+        <a class="btn btn-ghost" href="#contact" data-i18n="hero.cta2">联系我们</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <img class="cover" src="https://aka.doubaocdn.com/s/qVvndZeZG3" alt="Flight log cover">
+      <div class="route-tag">
+        <div>HKG <span>·</span> <b>KAI TAK</b></div>
+        <div>→&nbsp; PEK / PKX <span>·</span> <b>BEIJING</b></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 航线签名条 ===== -->
+<div class="route-band" aria-hidden="true">
+  <svg viewBox="0 0 1200 170" role="img">
+    <line x1="0" y1="85" x2="1200" y2="85" stroke="rgba(201,162,75,0.12)" stroke-width="1"/>
+    <circle cx="180" cy="85" r="7" class="apt-dot"/>
+    <circle cx="1020" cy="85" r="7" class="apt-dot"/>
+    <path d="M180 85 C 480 5, 720 165, 1020 85" class="route-arc"/>
+    <text x="150" y="40" class="apt-label" text-anchor="middle">HKG</text>
+    <text x="150" y="58" class="apt-sub" text-anchor="middle">KAI TAK</text>
+    <text x="1050" y="132" class="apt-label" text-anchor="middle">PEK / PKX</text>
+    <text x="1050" y="150" class="apt-sub" text-anchor="middle">BEIJING</text>
+    <g transform="translate(600 62) rotate(12)">
+      <path class="route-plane" d="M0 6 L16 0 L0 -6 L4 0 Z"/>
+      <path class="route-plane" d="M0 6 L-10 2 L-10 -2 L0 -6 Z" opacity="0.55"/>
+    </g>
+  </svg>
+</div>
+
+<!-- ===== 关于我们 ===== -->
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker mono" data-i18n="about.kicker">ABOUT US</div>
+      <h2 class="section-title" data-i18n="about.title">关于我们
+        <span class="en" data-i18n="about.titleEn">Who we are</span>
+      </h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-img">
+        <img src="https://aka.doubaocdn.com/s/2b2R22pkDK" alt="Young aviation enthusiast">
+      </div>
+      <div class="about-body">
+        <p data-i18n="about.p1"><b>啟誠寰宇有限公司（Kinway Global Limited）</b> 于 2026 年夏天在香港注册成立。我们是一群飞行爱好者——一群还在上学的青少年——我们相信，每一次飞行都不该只停留在记忆里，它值得被认真地记下来。</p>
+        <p data-i18n="about.p2">公司的名字里藏着我们的来处：「<b>启</b>」源于传奇的启德机场（Kai Tak），它代表着飞行的梦想与勇气；「<b>诚</b>」则源于位于中国北京的母公司，代表着诚信与本心。从启德出发，把真诚做成产品。</p>
+        <div class="name-cards">
+          <div class="name-card">
+            <span class="char" data-i18n="about.card1.char">启</span>
+            <h4 data-i18n="about.card1.t">啟 · 源于启德机场</h4>
+            <p data-i18n="about.card1.d">传奇的 Kai Tak（HKG），飞行的梦想与勇气。</p>
+          </div>
+          <div class="name-card">
+            <span class="char" data-i18n="about.card2.char">诚</span>
+            <h4 data-i18n="about.card2.t">誠 · 源于北京母公司</h4>
+            <p data-i18n="about.card2.d">中国北京的母公司，诚信与本心的来处。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 产品 ===== -->
+<section class="product" id="product">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker mono" data-i18n="product.kicker">OUR PRODUCT</div>
+      <h2 class="section-title" data-i18n="product.title">一本写给飞友的飞行日志
+        <span class="en" data-i18n="product.titleEn">The Flight Log</span>
+      </h2>
+    </div>
+    <div class="product-grid">
+      <div class="product-img">
+        <img src="https://aka.doubaocdn.com/s/jjFtVepV9U" alt="Flight log inner pages">
+      </div>
+      <div>
+        <span class="prod-tag">Designed in Kai Tak · Printed in Beijing</span>
+        <p class="prod-desc" data-i18n="product.desc">我们的产品是一本<b>消费级、有纪念意义</b>的飞行日志：<b>Designed in Kai Tak，Hong Kong（HKG）</b>，<b>Printed in Beijing，China（PEK / PKX）</b>。从启德的设计出发，在北京落地成册。它不只是一本记录本，更是你每一段航程的纪念册。</p>
+        <div class="feat-list">
+          <div class="feat"><span class="dot"></span><div><b data-i18n="product.f1t">记录全部细节</b><span data-i18n="product.f1d">航班号、机型、注册号、座位号，一个都不少</span></div></div>
+          <div class="feat"><span class="dot"></span><div><b data-i18n="product.f2t">签名与盖章区</b><span data-i18n="product.f2d">请机长与乘务组留下印记，附贴心指引</span></div></div>
+          <div class="feat"><span class="dot"></span><div><b data-i18n="product.f3t">票根收纳</b><span data-i18n="product.f3d">为登机牌与票根留出专属位置</span></div></div>
+          <div class="feat"><span class="dot"></span><div><b data-i18n="product.f4t">里程碑与成就</b><span data-i18n="product.f4d">新机型、新机场、第一次的航线，点亮徽章</span></div></div>
+          <div class="feat"><span class="dot"></span><div><b data-i18n="product.f5t">世界地图页</b><span data-i18n="product.f5d">画出你飞过的轨迹，里程一目了然</span></div></div>
+          <div class="feat"><span class="dot"></span><div><b data-i18n="product.f6t">故事留白</b><span data-i18n="product.f6d">给每一程留一句话、一张照片的回忆</span></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 我们是谁 ===== -->
+<section id="team">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker mono" data-i18n="team.kicker">THE TEAM</div>
+      <h2 class="section-title" data-i18n="team.title">一群热爱飞行的青少年
+        <span class="en" data-i18n="team.titleEn">We are aviation geeks</span>
+      </h2>
+    </div>
+    <div class="team-grid">
+      <div class="team-body">
+        <p data-i18n="team.p1"><b>Kinway Global 由一群还在读书的飞行爱好者创立。</b> 我们是高中生与青少年，在课余时间研究机型、对比航线、收集登机牌、蹲守每一次降落——对天空的热爱，是我们最共同的语言。</p>
+        <p data-i18n="team.p2">我们把自己最想拥有的那本日志做了出来，送给所有和我们一样的飞友：无论你是第一次登机，还是已经飞过上百个机场，都值得拥有属于自己的飞行纪念。</p>
+        <div class="team-flag">
+          <span>AVIATION GEEKS</span>
+          <span>STUDENTS</span>
+          <span>KAI TAK SPIRIT</span>
+          <span>MADE FOR FLYERS</span>
+        </div>
+      </div>
+      <div class="team-img">
+        <img src="https://aka.doubaocdn.com/s/qVvndZeZG3" alt="Flight log cover detail">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 联系我们 ===== -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker mono" data-i18n="contact.kicker">CONTACT</div>
+      <h2 class="section-title" data-i18n="contact.title">联系我们
+        <span class="en" data-i18n="contact.titleEn">Say hello</span>
+      </h2>
+    </div>
+    <div class="contact-cards">
+      <a class="c-card" href="https://wa.me/85265753900" target="_blank" rel="noopener">
+        <span class="c-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21h.01c5.46 0 9.9-4.45 9.9-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm5.83 14.12c-.24.68-1.42 1.31-1.96 1.36-.5.05-1.13.24-3.8-.79-3.22-1.28-5.26-4.54-5.42-4.75-.16-.21-1.29-1.72-1.29-3.28 0-1.56.82-2.33 1.11-2.65.29-.32.63-.4.84-.4.21 0 .42 0 .6.01.19.01.45-.07.7.54.26.62.88 2.14.96 2.29.08.16.13.35.03.56-.1.21-.16.34-.31.53-.16.18-.33.41-.47.55-.16.16-.32.33-.14.64.18.32.81 1.34 1.74 2.17 1.2 1.07 2.21 1.4 2.52 1.56.31.16.49.13.67-.08.18-.21.77-.9.98-1.21.21-.31.41-.26.7-.16.29.11 1.83.86 2.14 1.02.31.16.52.24.6.37.07.13.07.76-.17 1.44Z"/></svg>
+        </span>
+        <h4>WHATSAPP</h4>
+        <div class="c-line">+852 6575 3900</div>
+        <div class="c-hint" data-i18n="contact.waHint">发消息给我们</div>
+      </a>
+      <a class="c-card" href="https://instagram.com/KinwayGlobalLimited" target="_blank" rel="noopener">
+        <span class="c-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.2" fill="currentColor" stroke="none"/></svg>
+        </span>
+        <h4>INSTAGRAM</h4>
+        <div class="c-line">@KinwayGlobalLimited</div>
+        <div class="c-hint" data-i18n="contact.igHint">关注我们的动态</div>
+      </a>
+      <a class="c-card" href="mailto:coo.kinwayglobal@gmail.com">
+        <span class="c-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="m3.5 7 8.5 6 8.5-6"/></svg>
+        </span>
+        <h4>EMAIL</h4>
+        <div class="c-line">coo.kinwayglobal@gmail.com</div>
+        <div class="c-hint" data-i18n="contact.mailHint">商务与合作</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 弹幕心愿墙 ===== -->
+<section class="danmaku-section" id="wishes">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="kicker mono" data-i18n="danmaku.kicker">DANMAKU WISHES</div>
+      <h2 class="section-title" data-i18n="danmaku.title">你心中的飞行日志，是什么样子？
+        <span class="en" data-i18n="danmaku.titleEn">What is your dream flight log?</span>
+      </h2>
+    </div>
+    <div class="danmaku-stage" id="danmaku-stage">
+      <div class="stage-hint">
+        <div class="hint-zh" data-i18n="danmaku.hint">愿望正在穿过天空…</div>
+        <div class="hint-mono">WISHES IN FLIGHT</div>
+      </div>
+    </div>
+    <p class="danmaku-note" data-i18n="danmaku.note">把你的心愿也发给我们，它就会出现在这里，循环流转。</p>
+  </div>
+</section>
+
+<!-- ===== Footer ===== -->
+<footer>
+  <div class="wrap foot-inner">
+    <div class="foot-brand">Kinway <em>Global</em> · <span data-i18n="foot.zh">啟誠寰宇有限公司</span></div>
+    <div class="foot-note">
+      <div data-i18n="foot.line1">© 2026 Kinway Global Limited · Hong Kong</div>
+      <div class="mono">DESIGNED IN KAI TAK (HKG) · PRINTED IN BEIJING (PEK / PKX)</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var I18N = {
+    "zh-CN": {
+      "brand.zh":"啟誠寰宇有限公司",
+      "nav.about":"关于我们",
+      "nav.product":"我们的产品",
+      "nav.team":"我们是谁",
+      "nav.contact":"联系我们",
+      "hero.eyebrow":"KINWAY GLOBAL LIMITED · 2026 夏 创立于香港",
+      "hero.titleZh":"啟誠寰宇有限公司",
+      "hero.sub":"我们是一群热爱飞行的青少年，为飞友打造纪念级的消费级飞行日志。把每一次起飞、每一程航线，都写成可以反复翻阅的纪念。",
+      "hero.cta1":"看看我们的日志",
+      "hero.cta2":"联系我们",
+      "about.kicker":"关于我们",
+      "about.title":"关于我们",
+      "about.titleEn":"Who we are",
+      "about.p1":"<b>啟誠寰宇有限公司（Kinway Global Limited）</b> 于 2026 年夏天在香港注册成立。我们是一群飞行爱好者——一群还在上学的青少年——我们相信，每一次飞行都不该只停留在记忆里，它值得被认真地记下来。",
+      "about.p2":"公司的名字里藏着我们的来处：「<b>启</b>」源于传奇的启德机场（Kai Tak），它代表着飞行的梦想与勇气；「<b>诚</b>」则源于位于中国北京的母公司，代表着诚信与本心。从启德出发，把真诚做成产品。",
+      "about.card1.char":"启",
+      "about.card1.t":"启 · 源于启德机场",
+      "about.card1.d":"传奇的 Kai Tak（HKG），飞行的梦想与勇气。",
+      "about.card2.char":"诚",
+      "about.card2.t":"诚 · 源于北京母公司",
+      "about.card2.d":"中国北京的母公司，诚信与本心的来处。",
+      "product.kicker":"我们的产品",
+      "product.title":"一本写给飞友的飞行日志",
+      "product.titleEn":"The Flight Log",
+      "product.desc":"我们的产品是一本<b>消费级、有纪念意义</b>的飞行日志：<b>Designed in Kai Tak，Hong Kong（HKG）</b>，<b>Printed in Beijing，China（PEK / PKX）</b>。从启德的设计出发，在北京落地成册。它不只是一本记录本，更是你每一段航程的纪念册。",
+      "product.f1t":"记录全部细节",
+      "product.f1d":"航班号、机型、注册号、座位号，一个都不少",
+      "product.f2t":"签名与盖章区",
+      "product.f2d":"请机长与乘务组留下印记，附贴心指引",
+      "product.f3t":"票根收纳",
+      "product.f3d":"为登机牌与票根留出专属位置",
+      "product.f4t":"里程碑与成就",
+      "product.f4d":"新机型、新机场、第一次的航线，点亮徽章",
+      "product.f5t":"世界地图页",
+      "product.f5d":"画出你飞过的轨迹，里程一目了然",
+      "product.f6t":"故事留白",
+      "product.f6d":"给每一程留一句话、一张照片的回忆",
+      "team.kicker":"我们是谁",
+      "team.title":"一群热爱飞行的青少年",
+      "team.titleEn":"We are aviation geeks",
+      "team.p1":"<b>Kinway Global 由一群还在读书的飞行爱好者创立。</b> 我们是高中生与青少年，在课余时间研究机型、对比航线、收集登机牌、蹲守每一次降落——对天空的热爱，是我们最共同的语言。",
+      "team.p2":"我们把自己最想拥有的那本日志做了出来，送给所有和我们一样的飞友：无论你是第一次登机，还是已经飞过上百个机场，都值得拥有属于自己的飞行纪念。",
+      "contact.kicker":"联系我们",
+      "contact.title":"联系我们",
+      "contact.titleEn":"Say hello",
+      "contact.waHint":"发消息给我们",
+      "contact.igHint":"关注我们的动态",
+      "contact.mailHint":"商务与合作",
+      "danmaku.kicker":"弹幕心愿墙",
+      "danmaku.title":"你心中的飞行日志，是什么样子？",
+      "danmaku.titleEn":"What is your dream flight log?",
+      "danmaku.hint":"愿望正在穿过天空…",
+      "danmaku.note":"把你的心愿也发给我们，它就会出现在这里，循环流转。",
+      "foot.zh":"啟誠寰宇有限公司",
+      "foot.line1":"© 2026 Kinway Global Limited · 香港"
+    },
+    "zh-TW": {
+      "brand.zh":"啟誠寰宇有限公司",
+      "nav.about":"關於我們",
+      "nav.product":"我們的產品",
+      "nav.team":"我們是誰",
+      "nav.contact":"聯絡我們",
+      "hero.eyebrow":"KINWAY GLOBAL LIMITED · 2026 夏 創立於香港",
+      "hero.titleZh":"啟誠寰宇有限公司",
+      "hero.sub":"我們是一群熱愛飛行的青少年，為飛友打造紀念級的消費級飛行日誌。把每一次起飛、每一程航線，都寫成可以反覆翻閱的紀念。",
+      "hero.cta1":"看看我們的日誌",
+      "hero.cta2":"聯絡我們",
+      "about.kicker":"關於我們",
+      "about.title":"關於我們",
+      "about.titleEn":"Who we are",
+      "about.p1":"<b>啟誠寰宇有限公司（Kinway Global Limited）</b> 於 2026 年夏天在香港註冊成立。我們是一群飛行愛好者——一群還在讀書的青少年——我們相信，每一次飛行都不該只停留在記憶裡，它值得被認真地記下來。",
+      "about.p2":"公司的名字裡藏著我們的來處：「<b>啟</b>」源於傳奇的啟德機場（Kai Tak），它代表著飛行的夢想與勇氣；「<b>誠</b>」則源於位於中國北京的母公司，代表著誠信與本心。從啟德出發，把真誠做成產品。",
+      "about.card1.char":"啟",
+      "about.card1.t":"啟 · 源於啟德機場",
+      "about.card1.d":"傳奇的 Kai Tak（HKG），飛行的夢想與勇氣。",
+      "about.card2.char":"誠",
+      "about.card2.t":"誠 · 源於北京母公司",
+      "about.card2.d":"中國北京的母公司，誠信與本心的來處。",
+      "product.kicker":"我們的產品",
+      "product.title":"一本寫給飛友的飛行日誌",
+      "product.titleEn":"The Flight Log",
+      "product.desc":"我們的產品是一本<b>消費級、有紀念意義</b>的飛行日誌：<b>Designed in Kai Tak，Hong Kong（HKG）</b>，<b>Printed in Beijing，China（PEK / PKX）</b>。從啟德的設計出發，在北京落地成冊。它不只是一本記錄本，更是你每一段航程的紀念冊。",
+      "product.f1t":"記錄全部細節",
+      "product.f1d":"航班號、機型、註冊號、座位號，一個都不少",
+      "product.f2t":"簽名與蓋章區",
+      "product.f2d":"請機長與乘務組留下印記，附貼心指引",
+      "product.f3t":"票根收納",
+      "product.f3d":"為登機牌與票根留出專屬位置",
+      "product.f4t":"里程碑與成就",
+      "product.f4d":"新機型、新機場、第一次的航線，點亮徽章",
+      "product.f5t":"世界地圖頁",
+      "product.f5d":"畫出你飛過的軌跡，里程一目了然",
+      "product.f6t":"故事留白",
+      "product.f6d":"給每一程留一句話、一張照片的回憶",
+      "team.kicker":"我們是誰",
+      "team.title":"一群熱愛飛行的青少年",
+      "team.titleEn":"We are aviation geeks",
+      "team.p1":"<b>Kinway Global 由一群還在讀書的飛行愛好者創立。</b> 我們是高中生與青少年，在課餘時間研究機型、對比航線、收集登機牌、蹲守每一次降落——對天空的熱愛，是我們最共同的語言。",
+      "team.p2":"我們把自己最想擁有的那本日誌做了出來，送給所有和我們一樣的飛友：無論你是第一次登機，還是已經飛過上百個機場，都值得擁有屬於自己的飛行紀念。",
+      "contact.kicker":"聯絡我們",
+      "contact.title":"聯絡我們",
+      "contact.titleEn":"Say hello",
+      "contact.waHint":"傳訊息給我們",
+      "contact.igHint":"關注我們的動態",
+      "contact.mailHint":"商務與合作",
+      "danmaku.kicker":"彈幕心願牆",
+      "danmaku.title":"你心中的飛行日誌，是什麼樣子？",
+      "danmaku.titleEn":"What is your dream flight log?",
+      "danmaku.hint":"願望正在穿過天空…",
+      "danmaku.note":"把你的心願也傳給我們，它就會出現在這裡，循環流轉。",
+      "foot.zh":"啟誠寰宇有限公司",
+      "foot.line1":"© 2026 Kinway Global Limited · 香港"
+    },
+    "en": {
+      "brand.zh":"Kinway Global Limited",
+      "nav.about":"About",
+      "nav.product":"Our Log",
+      "nav.team":"Who We Are",
+      "nav.contact":"Contact",
+      "hero.eyebrow":"KINWAY GLOBAL LIMITED · EST. HONG KONG, SUMMER 2026",
+      "hero.titleZh":"Enabling every takeoff to be remembered",
+      "hero.sub":"We are a team of teenage aviation enthusiasts crafting keepsake-grade flight logs for fellow flyers. Every takeoff, every route — written down as something worth re-reading.",
+      "hero.cta1":"Explore our log",
+      "hero.cta2":"Contact us",
+      "about.kicker":"ABOUT US",
+      "about.title":"About us",
+      "about.titleEn":"Who we are",
+      "about.p1":"<b>Kinway Global Limited</b> was registered in Hong Kong in the summer of 2026. We are aviation enthusiasts — students still in school — who believe no flight should live only in memory. It deserves to be written down.",
+      "about.p2":"Our name carries our roots: <b>KIN</b> comes from the legendary Kai Tak Airport, the spirit of flight and courage; <b>WAY</b> stands for sincerity, the value we inherit from our parent company in Beijing. From Kai Tak, we turn sincerity into products.",
+      "about.card1.char":"启 / Kin",
+      "about.card1.t":"Kin · from Kai Tak",
+      "about.card1.d":"The legendary Kai Tak (HKG): the spirit of flight and courage.",
+      "about.card2.char":"诚 / Way",
+      "about.card2.t":"Way · from Beijing parent",
+      "about.card2.d":"Sincerity, the value from our parent company in Beijing.",
+      "product.kicker":"OUR PRODUCT",
+      "product.title":"A flight log made for flyers",
+      "product.titleEn":"The Flight Log",
+      "product.desc":"Our product is a <b>consumer-grade, keepsake flight log</b>: <b>Designed in Kai Tak, Hong Kong (HKG)</b> and <b>Printed in Beijing, China (PEK / PKX)</b>. Designed from Kai Tak, bound into a book in Beijing. More than a record — it is a keepsake for every journey.",
+      "product.f1t":"Every detail captured",
+      "product.f1d":"Flight number, aircraft type, registration, seat — all covered",
+      "product.f2t":"Signature & stamp areas",
+      "product.f2d":"Spaces for pilots and cabin crew, with a gentle guide",
+      "product.f3t":"Boarding pass pockets",
+      "product.f3d":"A dedicated home for your boarding passes and stubs",
+      "product.f4t":"Milestones & achievements",
+      "product.f4d":"New types, new airports, first routes — light up the badges",
+      "product.f5t":"World map pages",
+      "product.f5d":"Plot the routes you have flown at a glance",
+      "product.f6t":"Room for stories",
+      "product.f6d":"One sentence and one photo for every journey",
+      "team.kicker":"THE TEAM",
+      "team.title":"Teenage aviation enthusiasts",
+      "team.titleEn":"We are aviation geeks",
+      "team.p1":"<b>Kinway Global was started by aviation lovers still in school.</b> We are high-schoolers and teenagers who spend our free time studying aircraft types, comparing routes, collecting boarding passes and watching every landing — a shared love of the sky is our common language.",
+      "team.p2":"We built the flight log we always wished we had, for flyers just like us: whether it is your first boarding or your hundredth airport, you deserve your own flight keepsake.",
+      "contact.kicker":"CONTACT",
+      "contact.title":"Contact us",
+      "contact.titleEn":"Say hello",
+      "contact.waHint":"Message us",
+      "contact.igHint":"Follow our journey",
+      "contact.mailHint":"Business & collaboration",
+      "danmaku.kicker":"DANMAKU WISHES",
+      "danmaku.title":"What does your dream flight log look like?",
+      "danmaku.titleEn":"What is your dream flight log?",
+      "danmaku.hint":"Wishes are crossing the sky…",
+      "danmaku.note":"Send us your wish and it will appear here, looping forever.",
+      "foot.zh":"Kinway Global Limited",
+      "foot.line1":"© 2026 Kinway Global Limited · Hong Kong"
+    }
+  };
+
+  var danmakuSets = {
+    "zh-CN": [
+      {t:"希望每一页都能盖上一个机场的章", cls:"gold"},
+      {t:"记录第一次坐上某款机型的那一刻", cls:""},
+      {t:"把登机牌都贴进来，十年后慢慢翻", cls:"mono"},
+      {t:"航线在地图上连成线，画出我飞过的世界", cls:"gold"},
+      {t:"有一块地方，专门留给机长签名", cls:""},
+      {t:"新机型、新机场，点亮专属成就徽章", cls:""},
+      {t:"飞行里程能换算成绕地球多少圈", cls:"mono"},
+      {t:"每次飞行留一张照片和一句话就够", cls:"gold"},
+      {t:"注册号和座位号，一个都不能少", cls:"mono"},
+      {t:"把我飞过的所有机场，做成一张榜单", cls:""},
+      {t:"记录那架飞机自己的小故事", cls:""},
+      {t:"从启德起飞，飞向世界的每一程", cls:"gold"}
+    ],
+    "zh-TW": [
+      {t:"希望每一頁都能蓋上一個機場的章", cls:"gold"},
+      {t:"記錄第一次坐上某款機型的那一刻", cls:""},
+      {t:"把登機牌都貼進來，十年後慢慢翻", cls:"mono"},
+      {t:"航線在地圖上連成線，畫出我飛過的世界", cls:"gold"},
+      {t:"有一塊地方，專門留給機長簽名", cls:""},
+      {t:"新機型、新機場，點亮專屬成就徽章", cls:""},
+      {t:"飛行里程能換算成繞地球多少圈", cls:"mono"},
+      {t:"每次飛行留一張照片和一句話就夠", cls:"gold"},
+      {t:"註冊號和座位號，一個都不能少", cls:"mono"},
+      {t:"把我飛過的所有機場，做成一張榜單", cls:""},
+      {t:"記錄那架飛機自己的小故事", cls:""},
+      {t:"從啟德起飛，飛向世界的每一程", cls:"gold"}
+    ],
+    "en": [
+      {t:"An airport stamp on every single page", cls:"gold"},
+      {t:"The moment I first flew a certain aircraft type", cls:""},
+      {t:"All my boarding passes tucked in, to flip through in ten years", cls:"mono"},
+      {t:"Routes linking into lines, mapping the world I have flown", cls:"gold"},
+      {t:"A reserved spot for the captain's signature", cls:""},
+      {t:"New types and new airports lighting up achievement badges", cls:""},
+      {t:"Miles converted into how many times around the Earth", cls:"mono"},
+      {t:"One photo and one sentence per flight is enough", cls:"gold"},
+      {t:"Registration and seat number — never miss a detail", cls:"mono"},
+      {t:"Every airport I have been to, ranked on one page", cls:""},
+      {t:"The little story behind each aircraft", cls:""},
+      {t:"From Kai Tak, every leg flying out into the world", cls:"gold"}
+    ]
+  };
+
+  var currentLang = "zh-CN";
+  var stage = document.getElementById("danmaku-stage");
+  var danmakuTimer = null;
+
+  function renderTexts(lang){
+    var dict = I18N[lang];
+    var nodes = document.querySelectorAll("[data-i18n]");
+    for (var i=0;i<nodes.length;i++){
+      var el = nodes[i];
+      var key = el.getAttribute("data-i18n");
+      if (dict[key] !== undefined){
+        el.innerHTML = dict[key];
+      }
+    }
+    var hint = stage.querySelector(".hint-zh");
+    if (hint && dict["danmaku.hint"] !== undefined){
+      hint.textContent = dict["danmaku.hint"];
+    }
+  }
+
+  function spawnDanmaku(){
+    var items = danmakuSets[currentLang] || danmakuSets["zh-CN"];
+    var existing = stage.querySelectorAll(".danmaku-item");
+    for (var i=0;i<existing.length;i++){ existing[i].parentNode.removeChild(existing[i]); }
+    var n = items.length;
+    var multi = Math.max(2, Math.floor(stage.clientHeight / 60));
+    for (var i=0;i<multi;i++){
+      var msg = items[i % n];
+      var el = document.createElement("span");
+      el.className = "danmaku-item" + (msg.cls ? " " + msg.cls : "");
+      el.textContent = msg.t;
+      el.style.top = (6 + (i % multi) * (82 / multi)) + "%";
+      el.style.fontSize = "";
+      var dur = 15 + Math.random() * 10;
+      el.style.animationDuration = dur + "s";
+      el.style.animationDelay = (-1 * Math.random() * dur) + "s";
+      stage.appendChild(el);
+    }
+  }
+
+  function setLang(lang){
+    currentLang = lang;
+    var buttons = document.querySelectorAll(".lang-switch button");
+    for (var i=0;i<buttons.length;i++){
+      buttons[i].classList.toggle("active", buttons[i].getAttribute("data-lang") === lang);
+    }
+    document.documentElement.lang = lang;
+    renderTexts(lang);
+    if (stage) spawnDanmaku();
+  }
+
+  var btns = document.querySelectorAll(".lang-switch button");
+  for (var i=0;i<btns.length;i++){
+    btns[i].addEventListener("click", function(){
+      setLang(this.getAttribute("data-lang"));
+    });
+  }
+
+  var prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function initDanmaku(){
+    if (prefersReduced) return;
+    spawnDanmaku();
+    danmakuTimer = setInterval(function(){
+      // 周期性补充弹幕，保持流动感
+      if (!document.hidden){
+        var items = danmakuSets[currentLang] || danmakuSets["zh-CN"];
+        var msg = items[Math.floor(Math.random() * items.length)];
+        var el = document.createElement("span");
+        el.className = "danmaku-item" + (msg.cls ? " " + msg.cls : "");
+        el.textContent = msg.t;
+        el.style.top = (6 + Math.random() * 80) + "%";
+        var dur = 16 + Math.random() * 10;
+        el.style.animationDuration = dur + "s";
+        stage.appendChild(el);
+        setTimeout(function(node){ if (node.parentNode){ node.parentNode.removeChild(node); } }, (dur + 6) * 1000);
+      }
+    }, 2200);
+  }
+
+  window.addEventListener("load", function(){
+    renderTexts(currentLang);
+    initDanmaku();
+  });
+})();
+</script>
+</body>
+</html>
